@@ -8,8 +8,8 @@ on:
 
 
 jobs: 
-  test-lint
-    name: Linting
+  test-lint:
+    name: Lint and Test
     runs-on:
       ubuntu-20.04
       steps:
