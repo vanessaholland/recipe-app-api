@@ -5,6 +5,7 @@ from django.core.management import call_command
 from django.db.utils import OperationalError
 from django.test import SimpleTestCase
 
+
 @patch('core.management.commands.wait_for_db.Command.check')
 class CommandTests(SimpleTestCase):
     def test_wait_for_db_ready(self, patched_check):
@@ -17,7 +18,7 @@ class CommandTests(SimpleTestCase):
     # patching the sleep with empty mock so that it doesn't actually pause
     @patch('time.sleep')
     def test_wait_for_db_delay(self, patched_sleep, patched_check):
-        """ first 2 times calling the mock, raise the psycopg2 error, 
+        """ first 2 times calling the mock, raise the psycopg2 error,
         then raise 3 op errors, lastly return true """
         patched_check.side_effect = [Psycopg2Error] * 2 + \
             [OperationalError] * 3 + [True]
