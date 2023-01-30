@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 CREATE_USER_URL = reverse('user:create')
+TOKEN_URL = reverse('user:token')
 
 
 def create_test_user(**params):
@@ -58,3 +59,30 @@ class PublicUserApiTests(TestCase):
         ).exists()
         self.assertFalse(user_exists)
 
+    def test_create_token_for_user_auth(self):
+        user_details = {
+            'email': 'tokenuser@example.com',
+            'password': 'testpass123',
+            'name': 'Token APIUser'
+        }
+        create_test_user(**user_details)
+        payload = {
+            'email': user_details['email'],
+            'password': user_details['password'],
+        }
+        result = self.client.post(TOKEN_URL, payload)
+
+        self.assertIn('token', result.data)
+        self.assertEqual(result.status_code, status.HTTP_200_OK)
+
+    def test_create_token_bad_credentials(self):
+        create_test_user(email='mismatch@example.com', password='good_password123')
+
+        payload = {
+            'email': 'mismatch@example.com',
+            'password': 'bad_password123',
+        }
+        result = self.client.post(TOKEN_URL, payload)
+
+        self.assertNotIn('token', result.data)
+        self.assertEqual(result.status_code, status.HTTP_400_BAD_REQUEST)
