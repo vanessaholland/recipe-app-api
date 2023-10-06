@@ -7,8 +7,8 @@ from recipe import serializers
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication)
-    permission_classes = (IsAuthenticated)
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Recipe.objects.all()
     serializer_class = serializers.RecipeSerializer
 

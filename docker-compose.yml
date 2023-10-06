@@ -17,7 +17,7 @@ services:
     environment:
       - DB_HOST=db
       - DB_NAME=devdb
-      - DB_USER=devuser
+      - DB_USER=devdbuser
       - DB_PASSWORD=changeme
       - DEBUG=1
     depends_on:
@@ -29,7 +29,7 @@ services:
       - dev-db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
+      - POSTGRES_USER=devdbuser
       - POSTGRES_PASSWORD=changeme
 
 volumes:
