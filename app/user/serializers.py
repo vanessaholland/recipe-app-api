@@ -25,20 +25,21 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(
-        style = {'input_type': 'password'},
-        trim_whitespace = False,
+        style={'input_type': 'password'},
+        trim_whitespace=False,
     )
 
     def validate(self, attrs):
         email = attrs.get('email')
         password = attrs.get('password')
         user = authenticate(
-            request = self.context.get('request'),
-            username = email,
-            password = password
+            request=self.context.get('request'),
+            username=email,
+            password=password
         )
         if not user:
             message = _('Unable to authenticate with provided credentials')
@@ -46,4 +47,3 @@ class AuthTokenSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
-

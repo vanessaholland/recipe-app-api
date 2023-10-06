@@ -56,7 +56,7 @@ class PublicUserApiTests(TestCase):
         self.assertEqual(result.status_code, status.HTTP_400_BAD_REQUEST)
 
         user_exists = get_user_model().objects.filter(
-            email = payload['email']
+            email=payload['email']
         ).exists()
         self.assertFalse(user_exists)
 
@@ -77,7 +77,8 @@ class PublicUserApiTests(TestCase):
         self.assertEqual(result.status_code, status.HTTP_200_OK)
 
     def test_create_token_bad_credentials(self):
-        create_test_user(email='mismatch@example.com', password='good_password123')
+        create_test_user(email='mismatch@example.com',
+                         password='good_password123')
 
         payload = {
             'email': 'mismatch@example.com',
@@ -92,6 +93,7 @@ class PublicUserApiTests(TestCase):
         result = self.client.get(ME_URL)
 
         self.assertEqual(result.status_code, status.HTTP_401_UNAUTHORIZED)
+
 
 class PrivateUserApiTests(TestCase):
     def setUp(self):
@@ -115,7 +117,8 @@ class PrivateUserApiTests(TestCase):
     def test_post_not_allowed(self):
         result = self.client.post(ME_URL, {})
 
-        self.assertEqual(result.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(result.status_code,
+                         status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_patch_user_success(self):
         payload = {'name': 'Updated Name', 'password': 'new_password_123'}
