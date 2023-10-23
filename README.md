@@ -10,6 +10,10 @@ django rest api
 ## Linting
 `docker-compose run --rm app sh -c "flake8"`
 
+## View API docs
+`docker-compose up`
+http://127.0.0.1:8000/api/docs
+
 ## Create migrations based on model changes
 `docker-compose run --rm app sh -c "python manage.py makemigrations"`
 
